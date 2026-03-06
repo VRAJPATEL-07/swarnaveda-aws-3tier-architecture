@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SwarnaVeda Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <img src="/images/logo.png" alt="logo" class="site-logo" width="36" height="36" />
+        <span class="brand">SwarnaVeda</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:40px;">
+    <h2 style="text-align:center;color:var(--gold-start)">Admin — Upload Product</h2>
+
+    <div style="max-width:720px;margin:20px auto;background:var(--card);padding:20px;border-radius:12px;">
+      <form id="uploadForm">
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="text" id="name" placeholder="Product name" required style="flex:1;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--white)" />
+          <input type="number" id="price" placeholder="Price (INR)" required style="width:160px;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--white)" />
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <input type="text" id="category" placeholder="Category (Ring/Necklace/Earrings/Bracelet)" required style="flex:1;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--white)" />
+          <input type="file" id="image" accept="image/*" />
+        </div>
+        <textarea id="description" placeholder="Description" rows="4" style="width:100%;margin-top:10px;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--white)"></textarea>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+          <button type="button" id="btnSignup" class="btn login">Signup</button>
+          <button type="button" id="btnLogin" class="btn login">Login</button>
+          <button type="submit" id="btnUpload" class="book-btn">Upload Product</button>
+        </div>
+      </form>
+      <p id="msg" style="color:rgba(255,255,255,0.8);margin-top:12px"></p>
+    </div>
+  </main>
+
+  <script src="js/admin.js" defer></script>
+</body>
+</html>

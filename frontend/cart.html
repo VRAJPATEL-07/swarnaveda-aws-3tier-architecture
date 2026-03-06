@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart – SwarnaVeda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <img src="/images/logo.png" alt="SwarnaVeda logo" class="site-logo" width="40" height="40" />
+        <span class="brand">SwarnaVeda</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/index.html" class="btn login" style="font-size:13px;">Continue shopping</a>
+      <a href="/profile.html" class="btn login" id="nav-profile" style="font-size:13px;display:none;">Profile</a>
+      <a href="/login.html" class="btn login" id="nav-login" style="font-size:13px;">Login</a>
+      <a href="/cart.html" class="btn login" id="nav-cart" style="font-size:13px;">Cart (<span id="cart-count">0</span>)</a>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:40px;max-width:900px;">
+    <h2 style="color:var(--gold-start);text-align:center;margin-bottom:30px;">Shopping Cart</h2>
+    <div id="cartItems" style="background:var(--card);border-radius:12px;padding:24px;margin-bottom:24px;"></div>
+    <div style="background:var(--card);border-radius:12px;padding:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <p style="margin:0;color:rgba(255,255,255,0.7);">Subtotal:</p>
+          <h3 style="margin:4px 0;color:var(--gold-start);">₹ <span id="subtotal">0</span></h3>
+        </div>
+        <button id="checkoutBtn" class="btn login" style="padding:12px 28px;font-size:16px;">Proceed to Checkout</button>
+      </div>
+      <p id="msg" style="color:rgba(255,255,255,0.8);text-align:center;margin:12px 0;"></p>
+    </div>
+  </main>
+
+  <script src="js/cart.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLogin = document.getElementById('nav-login');
+      const navProfile = document.getElementById('nav-profile');
+      const cartCountEl = document.getElementById('cart-count');
+      const getToken = () => localStorage.getItem('sv_token');
+      const isLoggedIn = () => !!getToken();
+      const updateNav = () => {
+        navLogin.textContent = isLoggedIn() ? 'Logout' : 'Login';
+        navProfile.style.display = isLoggedIn() ? 'inline-block' : 'none';
+      };
+      const fetchCartCount = async () => {
+        if (!isLoggedIn()) { cartCountEl.textContent = '0'; return; }
+        try {
+          const res = await fetch('/api/cart', { headers: { Authorization: 'Bearer ' + getToken() } });
+          if (!res.ok) throw new Error();
+          const items = await res.json();
+          const total = items.reduce((s,i)=>s+(i.quantity||0),0);
+          cartCountEl.textContent = total;
+        } catch { cartCountEl.textContent='0'; }
+      };
+      updateNav();
+      fetchCartCount();
+      navLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isLoggedIn()) {
+          localStorage.removeItem('sv_token');
+          updateNav(); fetchCartCount();
+          window.location.href = '/';
+        } else {
+          window.location.href = '/login.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

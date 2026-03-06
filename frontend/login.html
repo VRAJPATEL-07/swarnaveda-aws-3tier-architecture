@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login – SwarnaVeda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <img src="/images/logo.png" alt="SwarnaVeda logo" class="site-logo" width="40" height="40" />
+        <span class="brand">SwarnaVeda</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/profile.html" class="btn login" id="nav-profile" style="font-size:13px;display:none;">Profile</a>
+      <a href="/login.html" class="btn login" id="nav-login" style="font-size:13px;">Login</a>
+      <a href="/cart.html" class="btn login" id="nav-cart" style="font-size:13px;">Cart (<span id="cart-count">0</span>)</a>
+    </div>
+  </nav>
+
+  <main class="container" style="max-width:400px;padding-top:60px;">
+    <h2 style="text-align:center;color:var(--gold-start)">Login to your account</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required style="width:100%;margin:8px 0;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--white)" />
+      <input type="password" id="password" placeholder="Password" required style="width:100%;margin:8px 0;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:var(--white)" />
+      <button type="submit" class="btn login" style="width:100%;margin-top:12px;">Login</button>
+    </form>
+    <p style="text-align:center;margin-top:16px;color:rgba(255,255,255,0.8);">Don't have an account? <a href="/register.html" style="color:var(--gold-start);text-decoration:underline">Register</a></p>
+    <p id="msg" style="color:rgba(255,255,255,0.8);text-align:center;margin-top:12px;"></p>
+  </main>
+
+  <script src="js/login.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLogin = document.getElementById('nav-login');
+      const navProfile = document.getElementById('nav-profile');
+      const cartCountEl = document.getElementById('cart-count');
+      const getToken = () => localStorage.getItem('sv_token');
+      const isLoggedIn = () => !!getToken();
+      const updateNav = () => {
+        navLogin.textContent = isLoggedIn() ? 'Logout' : 'Login';
+        navProfile.style.display = isLoggedIn() ? 'inline-block' : 'none';
+      };
+      const fetchCartCount = async () => {
+        if (!isLoggedIn()) { cartCountEl.textContent = '0'; return; }
+        try {
+          const res = await fetch('/api/cart', { headers: { Authorization: 'Bearer ' + getToken() } });
+          if (!res.ok) throw new Error();
+          const items = await res.json();
+          const total = items.reduce((s,i)=>s+(i.quantity||0),0);
+          cartCountEl.textContent = total;
+        } catch { cartCountEl.textContent='0'; }
+      };
+      updateNav();
+      fetchCartCount();
+      navLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isLoggedIn()) {
+          localStorage.removeItem('sv_token');
+          updateNav(); fetchCartCount();
+          window.location.href = '/';
+        } else {
+          window.location.href = '/login.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

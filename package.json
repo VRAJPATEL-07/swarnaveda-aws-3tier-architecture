@@ -1,0 +1,26 @@
+{
+  "name": "swarnaVeda",
+  "version": "1.0.0",
+  "description": "SwarnaVeda - Luxury jewellery e-commerce demo",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": ["jewellery","ecommerce","swarnaVeda","luxury"],
+  "author": "SwarnaVeda Dev",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0",
+    "mongodb-memory-server": "^8.11.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SwarnaVeda — Elegance That Defines You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">
+          <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <img src="/images/logo.png" alt="SwarnaVeda logo" class="site-logo" width="40" height="40" />
+            <span class="brand">SwarnaVeda</span>
+          </a>
+      </div>
+      <div class="nav-right">
+        <div class="search-wrap">
+          <input id="search" type="search" placeholder="Search jewellery..." />
+        </div>
+        <a href="/profile.html" class="btn login" id="nav-profile" style="display:none;">Profile</a>
+        <a href="/login.html" class="btn login" id="nav-login">Login</a>
+        <a href="/cart.html" class="btn login" id="nav-cart">Cart (<span id="cart-count">0</span>)</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <h1 class="hero-title">Elegance That Defines You</h1>
+      <p class="hero-sub">Discover premium handcrafted jewellery collections</p>
+    </header>
+
+    <section class="filters">
+      <div class="filter-buttons" id="categories">
+        <button class="filter active" data-cat="All">All</button>
+        <button class="filter" data-cat="Necklace">Necklace</button>
+        <button class="filter" data-cat="Ring">Ring</button>
+        <button class="filter" data-cat="Earrings">Earrings</button>
+        <button class="filter" data-cat="Bracelet">Bracelet</button>
+      </div>
+    </section>
+
+    <main class="container">
+      <div id="products" class="product-grid"></div>
+    </main>
+
+    <script src="js/script.js" defer></script>
+  </body>
+</html>

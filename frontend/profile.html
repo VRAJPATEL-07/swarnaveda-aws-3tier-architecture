@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile – SwarnaVeda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <img src="/images/logo.png" alt="SwarnaVeda logo" class="site-logo" width="40" height="40" />
+        <span class="brand">SwarnaVeda</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/index.html" class="btn login" style="font-size:13px;">Browse</a>
+      <a href="/cart.html" class="btn login" id="nav-cart" style="font-size:13px;">Cart (<span id="cart-count">0</span>)</a>
+      <a href="/profile.html" class="btn login" id="nav-profile" style="font-size:13px;">Profile</a>
+      <a href="/login.html" class="btn login" id="nav-login" style="font-size:13px;">Logout</a>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:40px;max-width:800px;">
+    <div style="background:var(--card);border-radius:12px;padding:32px;margin-bottom:24px;text-align:center;">
+      <div style="width:100px;height:100px;background:linear-gradient(135deg,var(--gold-start),var(--gold-end));border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:48px;color:#000;">👤</div>
+      <h2 style="margin:0 0 8px;color:var(--gold-start);" id="user-name">User</h2>
+      <p style="margin:0;color:rgba(255,255,255,0.7);font-size:14px;" id="user-email">–</p>
+      <p style="margin:8px 0 0;color:rgba(255,255,255,0.7);font-size:14px;" id="user-phone">–</p>
+      <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
+        <button id="order-btn" class="btn login">My Orders</button>
+        <button id="logout-btn" class="btn login" style="background:rgba(255,100,100,0.9);">Logout</button>
+      </div>
+      <p id="msg" style="color:rgba(255,255,255,0.8);margin-top:16px;"></p>
+    </div>
+
+    <div style="background:var(--card);border-radius:12px;padding:24px;">
+      <h3 style="margin-top:0;color:var(--gold-start);">Account Information</h3>
+      <div style="display:grid;gap:16px;">
+        <div>
+          <p style="margin:0 0 4px;color:rgba(255,255,255,0.6);font-size:12px;">Email</p>
+          <p style="margin:0;color:var(--white);font-weight:600;" id="acc-email">–</p>
+        </div>
+        <div>
+          <p style="margin:0 0 4px;color:rgba(255,255,255,0.6);font-size:12px;">Phone</p>
+          <p style="margin:0;color:var(--white);font-weight:600;" id="acc-phone">–</p>
+        </div>
+        <div>
+          <p style="margin:0 0 4px;color:rgba(255,255,255,0.6);font-size:12px;">Account Type</p>
+          <p style="margin:0;color:var(--gold-start);font-weight:600;" id="acc-role">Customer</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/profile.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLogin = document.getElementById('nav-login');
+      const cartCountEl = document.getElementById('cart-count');
+      const getToken = () => localStorage.getItem('sv_token');
+      const isLoggedIn = () => !!getToken();
+      const updateNav = () => {
+        navLogin.textContent = isLoggedIn() ? 'Logout' : 'Login';
+      };
+      const fetchCartCount = async () => {
+        if (!isLoggedIn()) { cartCountEl.textContent = '0'; return; }
+        try {
+          const res = await fetch('/api/cart', { headers: { Authorization: 'Bearer ' + getToken() } });
+          if (!res.ok) throw new Error();
+          const items = await res.json();
+          const total = items.reduce((s,i)=>s+(i.quantity||0),0);
+          cartCountEl.textContent = total;
+        } catch { cartCountEl.textContent='0'; }
+      };
+      updateNav();
+      fetchCartCount();
+      navLogin.addEventListener('click', () => {
+        if (isLoggedIn()) {
+          localStorage.removeItem('sv_token');
+          updateNav(); fetchCartCount();
+          window.location.href = '/';
+        } else {
+          window.location.href = '/login.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
