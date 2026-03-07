@@ -48,7 +48,8 @@ connectDB()
     await ensureAdminUser();
 
     app.listen(PORT, () => {
-      console.log(`SwarnaVeda server running on port ${PORT}`);
+      console.log(`\nSwarnaVeda server running on port ${PORT}`);
+      console.log(`\n  ➜  Local: http://localhost:${PORT}/\n`);
     });
   })
   .catch((err) => {

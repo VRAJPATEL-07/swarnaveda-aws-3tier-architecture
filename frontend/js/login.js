@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
       localStorage.setItem('sv_token', data.token);
-      window.location.href = '/';
+      localStorage.setItem('sv_user', JSON.stringify(data.user));
+      window.location.href = data.user.isAdmin ? '/admin-dashboard.html' : '/';
     } catch (err) {
       msg.textContent = err.message;
     }
