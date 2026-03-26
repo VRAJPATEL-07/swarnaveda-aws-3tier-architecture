@@ -21,6 +21,12 @@ MongoDB Atlas (Data Layer)
 
 ---
 
+## 📊 Architecture Diagram
+
+![alt text](architecture-diagram/swarnaveda-architecture.png)
+---
+
+
 ## ⚙️ Technologies Used
 
 ### ☁️ Cloud (AWS)
@@ -246,16 +252,6 @@ All screenshots are stored in:
 
 ```
 docs/screenshots/
-```
-
----
-
-## 📊 Architecture Diagram
-
-Add your diagram here:
-
-```
-docs/architecture/swarnaveda-architecture.png
 ```
 
 ---
