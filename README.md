@@ -256,12 +256,6 @@ docs/screenshots/
 
 ---
 
-## 💼 Resume Line
-
-> Designed and deployed a production-grade 3-tier architecture on AWS using VPC, EC2, Application Load Balancer, Auto Scaling, and MongoDB Atlas with secure networking and high availability across multiple Availability Zones.
-
----
-
 ## ⚠️ Cost Optimization Note
 
 * NAT Gateway and ALB are not free-tier services
